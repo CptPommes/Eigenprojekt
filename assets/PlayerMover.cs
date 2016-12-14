@@ -8,14 +8,22 @@ public class PlayerMover : MonoBehaviour {
     private Vector3 velocity = Vector3.zero;
     private Vector3 rotation = Vector3.zero;
     private Vector3 camRotation = Vector3.zero;
+    private bool jumping = false;
 
     private Rigidbody rb;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-    }   
-	
+    }
+
+    void FixedUpdate()
+    {
+        PerformMovement();
+        PerformRotation();
+        PerformJump();
+    }
+
     public void Move (Vector3 _velocity)
     {
         velocity = _velocity;
@@ -31,11 +39,7 @@ public class PlayerMover : MonoBehaviour {
         camRotation = _camRotation;
     }
 
-    void FixedUpdate()
-    {
-        PerformMovement();
-        PerformRotation();
-    }
+    
 
     void PerformMovement()
     {
@@ -51,6 +55,15 @@ public class PlayerMover : MonoBehaviour {
         if(cam != null)
         {
             cam.transform.Rotate(-camRotation);
+        }
+    }
+
+    void PerformJump()
+    {
+        if(!jumping && Input.GetKeyDown(KeyCode.Space))
+        {
+            rb.AddForce(Vector3.up * 10, ForceMode.Impulse);
+            jumping = true;
         }
     }
 }
