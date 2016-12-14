@@ -42,7 +42,18 @@ public class PlayerController : MonoBehaviour {
 
     }
 
-   
+    void Respawn()
+    {
+        transform.position = new Vector3 (0,0.8f,0);
+    }
+
+    void OnTriggerEnter(Collider hit)
+    {
+        if(hit.gameObject.tag == "Death")
+        {
+            Respawn();
+        }
+    }
 
     bool isGrounded()
     {
