@@ -60,7 +60,7 @@ public class PlayerMover : MonoBehaviour {
         if(cam != null)
         {
             cam.transform.Rotate(-camRotation);
-            Debug.Log(cam.transform.rotation.x);
+            
         }
     }
 

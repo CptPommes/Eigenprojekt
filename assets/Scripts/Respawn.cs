@@ -5,7 +5,7 @@ public class Respawn : MonoBehaviour {
 
     void PlayerDeath()
     {
-        transform.position = new Vector3(0, 6.64f, 28.78f);
+        transform.position = new Vector3(0.37f, 6.64f, 28.78f);
         transform.localEulerAngles = new Vector3(0,180f,0);
     }
 

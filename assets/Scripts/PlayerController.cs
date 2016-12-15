@@ -17,6 +17,11 @@ public class PlayerController : MonoBehaviour {
     void Update()
     {
         float xMov = Input.GetAxisRaw("Horizontal");
+        Debug.Log(xMov);
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            xMov = 0;
+        }
         float zMov = Input.GetAxisRaw("Vertical");
 
         Vector3 movHorizontal = transform.right * xMov;
@@ -43,18 +48,7 @@ public class PlayerController : MonoBehaviour {
 
     }
 
-    void Respawn()
-    {
-        transform.position = new Vector3 (0,0.8f,0);
-    }
-
-    void OnTriggerEnter(Collider hit)
-    {
-        if(hit.gameObject.tag == "Death")
-        {
-            Respawn();
-        }
-    }
+    
 
     bool isGrounded()
     {
