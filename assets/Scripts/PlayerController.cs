@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour {
         float yRot = Input.GetAxisRaw("Mouse X");
         float xRot = Input.GetAxisRaw("Mouse Y");
 
+
         Vector3 rotation = new Vector3(0f, yRot, 0f) * mouseSensitivity;
         Vector3 camRotation = new Vector3(xRot, 0f, 0f)* mouseSensitivity;
 

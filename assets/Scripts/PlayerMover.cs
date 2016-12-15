@@ -56,9 +56,11 @@ public class PlayerMover : MonoBehaviour {
     void PerformRotation()
     {
         rb.MoveRotation(rb.rotation * Quaternion.Euler(rotation));
+        
         if(cam != null)
         {
             cam.transform.Rotate(-camRotation);
+            Debug.Log(cam.transform.rotation.x);
         }
     }
 
