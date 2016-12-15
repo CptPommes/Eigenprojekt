@@ -24,7 +24,7 @@ public class PlayerMover : MonoBehaviour {
         PerformRotation();
         if (jump)
         {
-            rb.AddForce(Vector3.up * jumpHeight, ForceMode.Impulse);
+            rb.AddForce(Vector3.up * jumpHeight , ForceMode.Impulse);
             
         }
         jump = false;

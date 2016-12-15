@@ -17,13 +17,17 @@ public class PlayerController : MonoBehaviour {
     void Update()
     {
         float xMov = Input.GetAxisRaw("Horizontal");
-        Debug.Log(xMov);
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            xMov = 0;
-        }
+       
+
         float zMov = Input.GetAxisRaw("Vertical");
 
+        //Prevent user from moving forward (DELETE LATER!!!)
+        if (Input.GetKey(KeyCode.W))
+        {
+            zMov = 0;
+        }
+
+        
         Vector3 movHorizontal = transform.right * xMov;
         Vector3 movVertical = transform.forward * zMov;
 
@@ -47,8 +51,6 @@ public class PlayerController : MonoBehaviour {
 
 
     }
-
-    
 
     bool isGrounded()
     {
