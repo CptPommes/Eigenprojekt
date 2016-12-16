@@ -2,13 +2,14 @@
 using System.Collections;
 
 public class Respawn : MonoBehaviour {
+    
 
     void PlayerDeath()
     {
         //transform.position = new Vector3(0.37f, 6.64f, 28.78f);
-        transform.position = Checkpoint.check;
+        transform.position = Checkpoint.checkPosition;
         
-        transform.localEulerAngles = new Vector3(0,0,0);
+        transform.rotation = Checkpoint.checkRotation;
     }
 
     void OnTriggerEnter(Collider hit)

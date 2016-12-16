@@ -21,5 +21,6 @@ public class EnemyMovement : MonoBehaviour {
         }
         else agent.Resume();
     
+        
     }
 }

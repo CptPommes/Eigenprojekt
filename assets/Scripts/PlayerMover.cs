@@ -64,6 +64,8 @@ public class PlayerMover : MonoBehaviour {
         }
     }
 
+   
+
    public void Jump()
     {
         jump = true;
