@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Checkpoint : MonoBehaviour {
     public Transform player;
-    public static Vector3 checkPosition = new Vector3(0.37f, 6.64f, 28.78f);
+    public static Vector3 checkPosition = new Vector3(-0.26f, 1.16f, 3.72f);
     public static Quaternion checkRotation;
 
     void Start()
