@@ -14,14 +14,14 @@ public class EnemyMovement : MonoBehaviour {
 	void Update () {
         agent.SetDestination(target.position);
         Debug.Log(target.position);
-        /**
+        
         if (GetComponentInChildren<Renderer>().isVisible)
         {
             Debug.Log("isvisible");
             agent.Stop();
         }
         else agent.Resume();
-    **/
+    
         
     }
 }
