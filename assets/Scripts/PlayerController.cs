@@ -5,7 +5,7 @@ public class PlayerController : MonoBehaviour {
     public float speed = 5f;
     public float mouseSensitivity = 3f;
     private float distToGround;
-
+    public ParticleSystem spray;
     private PlayerMover move;
     
     void Start()
@@ -27,7 +27,12 @@ public class PlayerController : MonoBehaviour {
             zMov = 0;
         }**/
 
-        
+        if (Input.GetMouseButton(0))
+        {
+            Debug.Log("LeftClick");
+            spray.enableEmission = true ;
+        }
+        else spray.enableEmission = false;
         Vector3 movHorizontal = transform.right * xMov;
         Vector3 movVertical = transform.forward * zMov;
 
