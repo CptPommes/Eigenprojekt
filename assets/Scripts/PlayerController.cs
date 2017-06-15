@@ -27,12 +27,12 @@ public class PlayerController : MonoBehaviour {
             zMov = 0;
         }**/
 
-        if (Input.GetMouseButton(0))
+        /**if (Input.GetMouseButton(0))
         {
             Debug.Log("LeftClick");
             spray.enableEmission = true ;
         }
-        else spray.enableEmission = false;
+        else spray.enableEmission = false;**/
         Vector3 movHorizontal = transform.right * xMov;
         Vector3 movVertical = transform.forward * zMov;
 
