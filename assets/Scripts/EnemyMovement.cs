@@ -13,7 +13,7 @@ public class EnemyMovement : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         agent.SetDestination(target.position);
-        Debug.Log(target.position);
+        //Debug.Log(target.position);
         
         if (GetComponentInChildren<Renderer>().isVisible)
         {
