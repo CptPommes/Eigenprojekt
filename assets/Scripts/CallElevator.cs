@@ -6,16 +6,27 @@ public class CallElevator : MonoBehaviour {
     public GameObject doorLeft;
     public GameObject button;
     public GameObject enemy;
+    public Transform player;
+    EnemyMovement stop;
     private bool pressed = false;
 	// Use this for initialization
 	void Start () {
         doorRight = GameObject.Find("Door_Right");
         doorLeft = GameObject.Find("Door_Left");
-	}
+
+        stop = (EnemyMovement)enemy.GetComponent(typeof(EnemyMovement));
+    }
 	
 	// Update is called once per frame
 	void Update () {
-        
+        if (stop.dontMove)
+        {
+            float dot = Vector3.Dot(player.forward, (enemy.transform.position - player.position).normalized);
+            if (dot > 0.4f)
+            {
+                stop.dontMove = false;
+            }
+        }
 	}
 
     void OnTriggerStay(Collider col)
@@ -27,7 +38,9 @@ public class CallElevator : MonoBehaviour {
             pressed = true;
             StartCoroutine(ExecuteAfterTime(3));
             enemy.transform.localPosition = new Vector3(-167.3f, -8, -28.5f);
-            enemy.transform.rotation = new Quaternion(0, 0, 0,0);
+            enemy.transform.LookAt(player);
+             
+            stop.dontMove = true;
             
         }
     }

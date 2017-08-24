@@ -4,6 +4,7 @@ using System.Collections;
 public class EnemyMovement : MonoBehaviour {
     public Transform target;
     NavMeshAgent agent;
+    public bool dontMove = false;
 
 	// Use this for initialization
 	void Start () {
@@ -16,13 +17,19 @@ public class EnemyMovement : MonoBehaviour {
         agent.SetDestination(target.position);
         //transform.LookAt(target);
         //Debug.Log(target.position);
-        
-        if (GetComponentInChildren<Renderer>().isVisible)
+        float dot = Vector3.Dot(target.forward, (transform.position - target.position).normalized);
+        if (dot > 0.4f)
         {
             Debug.Log("isvisible");
             agent.Stop();
         }
-        else agent.Resume();
+        else if (dontMove)
+        {
+            Debug.Log("Dont move");
+            agent.Stop();
+        } else
+
+            agent.Resume();
     
         
     }
