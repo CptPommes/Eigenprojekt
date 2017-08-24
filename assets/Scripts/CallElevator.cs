@@ -4,6 +4,8 @@ using System.Collections;
 public class CallElevator : MonoBehaviour {
     public GameObject doorRight;
     public GameObject doorLeft;
+    public GameObject button;
+    public GameObject enemy;
     private bool pressed = false;
 	// Use this for initialization
 	void Start () {
@@ -21,16 +23,62 @@ public class CallElevator : MonoBehaviour {
         if (col.gameObject.tag == "Player" && Input.GetKeyDown(KeyCode.F) && !pressed)
         {
             Debug.Log("Button pressed");
+            StartCoroutine(buttonPress(1.5f));
             pressed = true;
             StartCoroutine(ExecuteAfterTime(3));
+            enemy.transform.localPosition = new Vector3(-167.3f, -8, -28.5f);
+            enemy.transform.rotation = new Quaternion(0, 0, 0,0);
+            
         }
     }
 
     IEnumerator ExecuteAfterTime(float time)
     {
         yield return new WaitForSeconds(time);
-        doorRight.transform.Rotate(0, 0, -20);
-        doorLeft.transform.Rotate(0, 0, 20);
+        StartCoroutine(RotateDoor(new Vector3(0, 0, -20), 2, doorRight));
+        StartCoroutine(RotateDoor(new Vector3(0, 0, 20), 2, doorLeft));
+       
+        
+    }
+
+    IEnumerator RotateDoor(Vector3 angles, float inTime, GameObject door)
+    {
+        Quaternion fromAngle = door.transform.rotation;
+        Quaternion toAngle = Quaternion.Euler(door.transform.eulerAngles + angles);
+        for(float t = 0f; t< 1f; t += Time.deltaTime / inTime)
+        {
+            door.transform.rotation = Quaternion.Lerp(fromAngle, toAngle, t);
+            yield return null;
+        }
+        
+    }
+
+    IEnumerator buttonPress(float inTime)
+
+    {
+        bool down = false;
+        Vector3 topPosition = button.transform.position;
+        Vector3 bottomPosition = topPosition + new Vector3(-.1f, -.2f, 0);
+        
+        for (float t = 0f; t < 1f; t += Time.deltaTime / inTime)
+        {
+            if (t > .5f && !down)
+            {
+                bottomPosition = topPosition;
+                topPosition = button.transform.position;
+                down = true;
+            }
+            
+            button.transform.position = Vector3.Lerp(topPosition, bottomPosition, t);
+
+            yield return false;
+
+            
+
+        }
+            
+        
+        
         
     }
 }
