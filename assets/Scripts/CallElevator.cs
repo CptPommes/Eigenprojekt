@@ -7,6 +7,12 @@ public class CallElevator : MonoBehaviour {
     public GameObject button;
     public GameObject enemy;
     public Transform player;
+    public AudioSource elevatorAudio;
+    public AudioClip closingElevator;
+    public AudioClip ding;
+    public AudioClip movingElevator;
+    public AudioClip scare;
+    public AudioSource enemyAudio;
     EnemyMovement stop;
     private bool pressed = false;
 	// Use this for initialization
@@ -24,6 +30,7 @@ public class CallElevator : MonoBehaviour {
             float dot = Vector3.Dot(player.forward, (enemy.transform.position - player.position).normalized);
             if (dot > 0.4f)
             {
+                elevatorAudio.PlayOneShot(scare);
                 stop.dontMove = false;
             }
         }
@@ -36,7 +43,7 @@ public class CallElevator : MonoBehaviour {
             Debug.Log("Button pressed");
             StartCoroutine(buttonPress(1.5f));
             pressed = true;
-            StartCoroutine(ExecuteAfterTime(3));
+            StartCoroutine(ExecuteAfterTime(17));
             enemy.transform.localPosition = new Vector3(-167.3f, -8, -28.5f);
             enemy.transform.LookAt(player);
              
@@ -47,7 +54,9 @@ public class CallElevator : MonoBehaviour {
 
     IEnumerator ExecuteAfterTime(float time)
     {
+        GetComponent<AudioSource>().PlayOneShot(movingElevator);
         yield return new WaitForSeconds(time);
+        GetComponent<AudioSource>().PlayOneShot(ding);
         StartCoroutine(RotateDoor(new Vector3(0, 0, -20), 2, doorRight));
         StartCoroutine(RotateDoor(new Vector3(0, 0, 20), 2, doorLeft));
        

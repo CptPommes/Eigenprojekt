@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class Elevator : MonoBehaviour {
     public GameObject doorRight;
     public GameObject doorLeft;
+    public AudioClip closingDoors;
+    public AudioClip movingElevator;
     
     // Use this for initialization
     void Start()
@@ -22,15 +25,21 @@ public class Elevator : MonoBehaviour {
         if (col.gameObject.tag == "Player")
         {
             Debug.Log("Entered Elevator");
-            StartCoroutine(ExecuteAfterTime(3));
+            StartCoroutine(ExecuteAfterTime(2));
+            
         }
     }
 
     IEnumerator ExecuteAfterTime(float time)
     {
         yield return new WaitForSeconds(time);
+        GetComponent<AudioSource>().PlayOneShot(closingDoors);
         StartCoroutine(RotateDoor(new Vector3(0, 0, 20), 2, doorRight));
         StartCoroutine(RotateDoor(new Vector3(0, 0, -20), 2, doorLeft));
+        yield return new WaitForSeconds(2);
+        GetComponent<AudioSource>().PlayOneShot(movingElevator);
+        yield return new WaitForSeconds(4);
+        SceneManager.LoadScene(0);
 
 
     }
@@ -44,6 +53,13 @@ public class Elevator : MonoBehaviour {
             door.transform.rotation = Quaternion.Lerp(fromAngle, toAngle, t);
             yield return null;
         }
+
+    }
+
+    IEnumerator loadNext(int next, int time)
+    {
+        yield return new WaitForSeconds(time);
+        SceneManager.LoadScene(next);
 
     }
 

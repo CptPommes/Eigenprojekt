@@ -8,6 +8,7 @@ public class PlayerMover : MonoBehaviour {
     private Vector3 velocity = Vector3.zero;
     private Vector3 rotation = Vector3.zero;
     private Vector3 camRotation = Vector3.zero;
+    public AudioSource footSteps;
     private bool jump = false;
     public float jumpHeight = 10f;
 
@@ -24,6 +25,8 @@ public class PlayerMover : MonoBehaviour {
         PerformRotation();
         if (jump)
         {
+            
+
             rb.AddForce(Vector3.up * jumpHeight , ForceMode.Impulse);
             
         }
@@ -47,9 +50,16 @@ public class PlayerMover : MonoBehaviour {
 
     void PerformMovement()
     {
-        if (velocity != Vector3.zero) { 
+        if (velocity != Vector3.zero)
+        {
+            if (!footSteps.isPlaying)
+            {
+                footSteps.Play();
+                
+            }
             rb.MovePosition(rb.position + velocity * Time.fixedDeltaTime);
         }
+        else footSteps.Stop();
 
     }
 
