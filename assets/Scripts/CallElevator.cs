@@ -1,6 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/**
+ * CallElevator
+ * 
+ * Goes onto the button infront of the elevator in level one.
+ * Handles the button press and the call of the elevator.
+ **/
 public class CallElevator : MonoBehaviour {
     public GameObject doorRight;
     public GameObject doorLeft;
@@ -20,14 +26,18 @@ public class CallElevator : MonoBehaviour {
         doorRight = GameObject.Find("Door_Right");
         doorLeft = GameObject.Find("Door_Left");
 
-        stop = (EnemyMovement)enemy.GetComponent(typeof(EnemyMovement));
+        stop = (EnemyMovement)enemy.GetComponent(typeof(EnemyMovement)); //Enemy Movement script, so that the dontStop bool can be called from here.
     }
 	
 	// Update is called once per frame
 	void Update () {
+
+        /**
+        * Check for the scripted event that is triggered by the button, if the dontMove bool is true, play the scare sound when the player turns towards the enemy and enable movement again. 
+        **/
         if (stop.dontMove)
         {
-            float dot = Vector3.Dot(player.forward, (enemy.transform.position - player.position).normalized);
+            float dot = Vector3.Dot(player.forward, (enemy.transform.position - player.position).normalized); //Angle between enemy position and player camera
             if (dot > 0.4f)
             {
                 elevatorAudio.PlayOneShot(scare);
@@ -36,6 +46,9 @@ public class CallElevator : MonoBehaviour {
         }
 	}
 
+    /**
+    * When the player is inside the collider, he can press the button via the F key once. Also spawns the enemy behind the player and disables its movement
+    **/
     void OnTriggerStay(Collider col)
     {
         if (col.gameObject.tag == "Player" && Input.GetKeyDown(KeyCode.F) && !pressed)
@@ -52,6 +65,9 @@ public class CallElevator : MonoBehaviour {
         }
     }
 
+    /**
+    * After the specified time, opens the doors of the elevator, after playing the belonging sounds
+    **/
     IEnumerator ExecuteAfterTime(float time)
     {
         GetComponent<AudioSource>().PlayOneShot(movingElevator);
@@ -63,6 +79,9 @@ public class CallElevator : MonoBehaviour {
         
     }
 
+    /**
+    *   Rotate the doors 
+    **/
     IEnumerator RotateDoor(Vector3 angles, float inTime, GameObject door)
     {
         Quaternion fromAngle = door.transform.rotation;
@@ -75,6 +94,9 @@ public class CallElevator : MonoBehaviour {
         
     }
 
+    /**
+    * Animate the button press, button going down then up again
+    **/
     IEnumerator buttonPress(float inTime)
 
     {
@@ -84,6 +106,7 @@ public class CallElevator : MonoBehaviour {
         
         for (float t = 0f; t < 1f; t += Time.deltaTime / inTime)
         {
+            //After half the time, change the movement from down to up
             if (t > .5f && !down)
             {
                 bottomPosition = topPosition;

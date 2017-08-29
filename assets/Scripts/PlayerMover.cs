@@ -1,5 +1,12 @@
 ﻿using UnityEngine;
 
+/**
+ * PlayerMover
+ * 
+ * Moves the player in a fixed update, so its independet from the framerate. Gets inputs from PlayerController.
+ * 
+ * Required: Rigidbody for movement by force.
+ **/
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerMover : MonoBehaviour {
 
@@ -33,6 +40,43 @@ public class PlayerMover : MonoBehaviour {
         jump = false;
     }
 
+    /**
+     * Performs the movement of the player. Also plays footsteps sound when moving.
+     **/
+    void PerformMovement()
+    {
+        if (velocity != Vector3.zero)
+        {
+            //Only start footsteps once, so it isn't stacking
+            if (!footSteps.isPlaying)
+            {
+                footSteps.Play();
+
+            }
+            rb.MovePosition(rb.position + velocity * Time.fixedDeltaTime);
+        }
+        else footSteps.Stop();
+
+    }
+
+    /**
+    * Performs rotation of the player
+    **/
+    void PerformRotation()
+    {
+        rb.MoveRotation(rb.rotation * Quaternion.Euler(rotation));
+
+        if (cam != null)
+        {
+            cam.transform.Rotate(-camRotation);
+
+        }
+    }
+
+    /**
+   * Methods used by the PlayerController for handing over the inputs.
+   **/
+
     public void Move (Vector3 _velocity)
     {
         velocity = _velocity;
@@ -48,31 +92,7 @@ public class PlayerMover : MonoBehaviour {
         camRotation = _camRotation;
     }
 
-    void PerformMovement()
-    {
-        if (velocity != Vector3.zero)
-        {
-            if (!footSteps.isPlaying)
-            {
-                footSteps.Play();
-                
-            }
-            rb.MovePosition(rb.position + velocity * Time.fixedDeltaTime);
-        }
-        else footSteps.Stop();
-
-    }
-
-    void PerformRotation()
-    {
-        rb.MoveRotation(rb.rotation * Quaternion.Euler(rotation));
-        
-        if(cam != null)
-        {
-            cam.transform.Rotate(-camRotation);
-            
-        }
-    }
+    
 
    
 
